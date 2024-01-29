@@ -1,24 +1,19 @@
 <?php
-$numberOfCards = 27;
-$pageName = 'Browse';
+$projectName = "MeepMeep 🚗";
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/index.css">
-    <title><?=ENV::PROJECT_NAME->value?> - <?=$pageName?></title>
+    <link rel="stylesheet" href="../styles/index.css">
+    <title><?=$projectName?></title>
 </head>
 <body>
     <a href="/"><h1><?=$projectName?></h1></a>
     <div class="cars-container">
-        <?php
-        $array = json_decode(file_get_contents("../cars.json"), true);
-        shuffle($array);
-        $array = array_slice($array, 0, $numberOfCards);
-        foreach ($array as $car) { ?>
-            <div class="car">
+        <?php ?>
+        <div class="car">
                 <div class="car-header">
                     <div class="car-image">
                         <img src="<?=$car['photo']?>" alt="<?=ucwords($car["Name"])?> image">
@@ -42,7 +37,6 @@ $pageName = 'Browse';
                     </a>
                 </div>
             </div>
-            <?php } ?>
         </div>
 </body>
 </html>
