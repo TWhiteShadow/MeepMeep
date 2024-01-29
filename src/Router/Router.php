@@ -27,14 +27,13 @@ class Router
         
        
         foreach($this->routes[$_SERVER['REQUEST_METHOD']] as $route){
-            // var_dump($route,"<br>",$this->url, "<br>", $route->matches($this->url));
        
             if($route->matches($this->url)){
                 $route->execute();
             }
         }   
 
-        return header("HTTP/1.0 404 Not Found");
+        // return header("HTTP/1.0 404 Not Found");
     }
 
 }

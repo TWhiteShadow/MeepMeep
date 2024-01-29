@@ -1,20 +1,15 @@
 <?php
 
-final class Autoloader
+final readonly class Autoloader
 {
-    public static function register()
+    public static function register(): void
     {
         spl_autoload_register(function ($class) {
-
-            var_dump($class);
-
-            if (str_starts_with($class, "App\\")){
-                $class=substr_replace($class,"src", 0, 3);
+            if (str_starts_with($class, 'App\\')) {
+                $class = substr_replace($class, 'src', 0, 3);
             }
 
-            $file = str_replace('\\', DIRECTORY_SEPARATOR, $class).'.php';
-
-            var_dump($file);
+            $file = '../' . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
 
             if (file_exists($file)) {
                 require $file;
