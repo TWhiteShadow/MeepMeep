@@ -33,7 +33,7 @@ services:
     depends_on:
       - php
     ports:
-      - 8003:80
+      - 8003:8003
       
 
 
