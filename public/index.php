@@ -1,6 +1,6 @@
 <?php
 $projectName = "MeepMeep 🚗";
-
+$numberOfCards = 9;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,25 +14,28 @@ $projectName = "MeepMeep 🚗";
     <h1><?=$projectName?></h1>
     <div class="cars-container">
     <?php
-        $array = json_decode(file_get_contents("../cars.json"),true);
-        // print_r($array);
-        //
-        foreach ($array as $car) {
-            ?>
+        $array = json_decode(file_get_contents("../cars.json"), true);
+        shuffle($array);
+        $array = array_slice($array, 0, $numberOfCards);
+        foreach ($array as $car) { ?>
             <div class="car">
-                <h2><?=$car["Name"]?></h2>
-                <p><?=$car["Miles_per_Gallon"]?></p>
-                <p><?=$car["Cylinders"]?></p>
-                <p><?=$car["Displacement"]?></p>
-                <p><?=$car["Horsepower"]?></p>
-                <p><?=$car["Weight_in_lbs"]?></p>
-                <p><?=$car["Acceleration"]?></p>
-                <p><?=$car["Year"]?></p>
-                <p><?=$car["Origin"]?></p>
+                <div class="car-header">
+                    <img src="" alt="meep">
+                    <h2><?= ucwords($car["Name"])?></h2>
+                </div>
+                <div class="car-content">
+                    <p>Horsepower (@rpm) : <span><?=$car["Horsepower"]?></span></p>
+                    <p>Miles per gallon : <span><?=$car["Miles_per_Gallon"]?></span></p>
+                    <p>Cylinders : <span><?=$car["Cylinders"]?></span></p>
+                    <p>Displacement : <span><?=$car["Displacement"]?></span></p>
+                    <p>Weight (in lb) : <span><?=$car["Weight_in_lbs"]?></span></p>
+                    <p>Acceleration (0 - 60 mph) : <span><?=$car["Acceleration"]?></span></p>
+                    <p>Year : <span><?=$car["Year"]?></span></p>
+                    <p>Origin : <span><?=$car["Origin"]?></span></p>
+                    <button>Book Now</button>
+                </div>
             </div>
-            <?php
-        }
-    ?>
+        <?php } ?>
     </div>
 </body>
 </html>
