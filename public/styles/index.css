@@ -1,3 +1,16 @@
 body{
     background-color: lightblue;
 }
+
+.cars-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    justify-content: space-evenly;
+    } 
+
+.car{
+    border: 1px solid lightgray;
+    border-radius: 15px;
+    background-color: white;
+}
