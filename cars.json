@@ -4680,17 +4680,17 @@
         "photo": "https:\/\/encrypted-tbn0.gstatic.com\/images?q=tbn:ANd9GcTnGbxhdgVqyF7-eN0vJQms6Ozxi7JvcIeoBuVmkvLViJNXyyHnxDRbz77GVg&s"
     },
     {
-        "Name": "volkswagen jetta",
-        "Miles_per_Gallon": 33,
-        "Cylinders": 4,
-        "Displacement": 105,
-        "Horsepower": 74,
-        "Weight_in_lbs": 2190,
-        "Acceleration": 14.2,
-        "Year": "1982-01-01",
+        "Name": "volkswagen jetta 1500 GLS",
+        "Miles_per_Gallon": "33",
+        "Cylinders": "4",
+        "Displacement": "105",
+        "Horsepower": "70",
+        "Weight_in_lbs": "2190",
+        "Acceleration": "13.3",
+        "Year": "1980-01-01",
         "Origin": "Europe",
         "id": 361,
-        "photo": "https:\/\/encrypted-tbn0.gstatic.com\/images?q=tbn:ANd9GcQ8plwUpahB67xqZdt6fEYlqJsHfj-jkbf_girtT7E77wVMiSIOd7LqEQ3z3w&s"
+        "photo": "https:\/\/www.cars-data.com\/pictures\/volkswagen\/volkswagen-jetta_2815_1.jpg"
     },
     {
         "Name": "renault 18i",
@@ -5175,16 +5175,16 @@
     },
     {
         "Name": "toyota celica gt",
-        "Miles_per_Gallon": 32,
-        "Cylinders": 4,
-        "Displacement": 144,
-        "Horsepower": 96,
-        "Weight_in_lbs": 2665,
-        "Acceleration": 13.9,
+        "Miles_per_Gallon": "32",
+        "Cylinders": "4",
+        "Displacement": "144",
+        "Horsepower": "96",
+        "Weight_in_lbs": "2665",
+        "Acceleration": "13.9",
         "Year": "1982-01-01",
         "Origin": "Japan",
         "id": 399,
-        "photo": "https:\/\/encrypted-tbn0.gstatic.com\/images?q=tbn:ANd9GcSu_1AeZ6Qn8cSs3IwHwV0_NyJLDrpSKZkcYP2IhtNkOIGfgofunkWlpo-3DA&s"
+        "photo": "https:\/\/www.onallcylinders.com\/wp-content\/uploads\/2022\/06\/22\/1977-toyota-celica-gt-scaled.jpg"
     },
     {
         "Name": "dodge charger 2.2",

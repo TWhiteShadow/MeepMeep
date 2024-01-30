@@ -68,7 +68,7 @@ class CarController
             }
         }
         if ($carExist === true) {
-            // include "update.php";
+            include "update.php";
             // file_put_contents("../../cars.json", json_encode($array, JSON_PRETTY_PRINT));
             // Rediriger ou afficher la page mise à jour
         } else {
