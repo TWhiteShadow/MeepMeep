@@ -54,7 +54,7 @@ class Router
                     }
                     $url =  $route->getPath();
                     if($id !== null){
-                        $url = str_replace(":id", $id, $url);
+                        $url = str_replace("{id}", $id, $url);
                     }
                     return $url;
                 }
@@ -64,6 +64,27 @@ class Router
         return null; 
     }
 
+
+    public static function assets(string $folder, string $filename)
+    {
+        $baseUrl = $_SERVER['SCRIPT_NAME'];
+        $url = str_replace("index.php", "", $baseUrl);
+        $url .= $folder . "/" . $filename;
+        return $url;
+    }
+
+    public static function redirect(string $route, int $nbPathToDelete)
+    {
+
+        $domain = 'http://' . $_SERVER['HTTP_HOST'];
+
+        // Construisez l'URL de redirection en utilisant les fonctions de routage
+        $url = $domain . implode('/', array_slice(explode('/', $_SERVER['REQUEST_URI']), 0, -$nbPathToDelete)) . '/' . $route;
+
+        // Effectuez la redirection
+        header('Location: ' . $url);
+        exit;
+    }
     
 
 
