@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Controller;
-use App\Env;
 class HomeController
 {
    

@@ -1,9 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Yesteryear&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500;600;700;800;900;1000&display=swap');
 
-h1{
+h1 {
     text-align: center;
 }
-h1, h2{
+
+h1,
+h2 {
     font-family: 'Yesteryear', cursive;
     font-size: 30px;
 }
@@ -19,8 +22,7 @@ body {
     gap: 1rem;
     grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
     gap: 20px;
-    justify-content: space-evenly;
-
+    justify-content: space-between;
 }
 
 .car {
@@ -29,8 +31,10 @@ body {
     background-color: white;
     padding: 20px;
     border-radius: 20px;
+    font-family: 'Mulish', sans-serif;
 }
-.car-header{
+
+.car-header {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -38,25 +42,48 @@ body {
     max-height: 30vh;
     height: 200px;
 }
+
 .car-image {
     height: 100%;
+    -webkit-box-shadow: inset 0px 0px 26px 29px #FFFFFF; 
+    box-shadow: inset 0px 0px 26px 29px #FFFFFF;
 }
+
 .car-image img {
     object-fit: cover;
     height: 100%;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    
 }
 
-.car-content{
+.car-content {
     display: grid;
     flex-direction: column;
-    grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 
 .car-content span {
     font-weight: bold;
 }
-  
+
+.car-info{
+    max-width: 1200px;
+    width: 100%;
+}
+
+.car-content-info{
+    text-align: center;
+}
+
 /* Button */
+
+.learn-more-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
 
 .learn-more {
     position: relative;
@@ -70,14 +97,14 @@ body {
     padding: 0;
     font-size: inherit;
     font-family: inherit;
-   }
-   
-   .learn-more {
+}
+
+.learn-more {
     width: 12rem;
     height: auto;
-   }
-   
-   .learn-more .circle {
+}
+
+.learn-more .circle {
     transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
     position: relative;
     display: block;
@@ -86,26 +113,26 @@ body {
     height: 3rem;
     background: #282936;
     border-radius: 1.625rem;
-   }
-   
-   .learn-more .circle .icon {
+}
+
+.learn-more .circle .icon {
     transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
     position: absolute;
     top: 0;
     bottom: 0;
     margin: auto;
     background: #fff;
-   }
-   
-   .learn-more .circle .icon.arrow {
+}
+
+.learn-more .circle .icon.arrow {
     transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
     left: 0.625rem;
     width: 1.125rem;
     height: 0.125rem;
     background: none;
-   }
-   
-   .learn-more .circle .icon.arrow::before {
+}
+
+.learn-more .circle .icon.arrow::before {
     position: absolute;
     content: "";
     top: -0.29rem;
@@ -115,33 +142,54 @@ body {
     border-top: 0.125rem solid #fff;
     border-right: 0.125rem solid #fff;
     transform: rotate(45deg);
-   }
-   
-   .learn-more .learn-more-text {
+}
+
+.learn-more .learn-more-text {
     transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    padding: 0.75rem 0;
+    padding: 0.69rem 0;
     margin: 0 0 0 1.85rem;
     color: #282936;
     font-weight: 700;
     line-height: 1.6;
     text-align: center;
     text-transform: uppercase;
-   }
-   
-   .learn-more:hover .circle {
+}
+
+.learn-more:hover .circle {
     width: 100%;
-   }
-   
-   .learn-more:hover .circle .icon.arrow {
+}
+
+.learn-more:hover .circle .icon.arrow {
     background: #fff;
     transform: translate(1rem, 0);
-   }
-   
-   .learn-more:hover .learn-more-text {
+}
+
+.learn-more:hover .learn-more-text {
     color: #fff;
-   }
+}
+
+.carInfo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.carInfo .car-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.carInfo .car-content div{
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    text-align: start;
+}

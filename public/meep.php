@@ -1,6 +1,7 @@
 <?php
 $numberOfCards = 27;
 $pageName = 'Browse';
+$projectName = "🚗 MeepMeep 🚗"
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,7 +9,7 @@ $pageName = 'Browse';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/index.css">
-    <title><?=ENV::PROJECT_NAME->value?> - <?=$pageName?></title>
+    <title><?=$projectName?> - <?=$pageName?></title>
 </head>
 <body>
     <a href="/"><h1><?=$projectName?></h1></a>
@@ -34,9 +35,11 @@ $pageName = 'Browse';
                     <p>Acceleration (0 - 60 mph) : <span><?=$car["Acceleration"]?></span></p>
                     <p>Year : <span><?=$car["Year"]?></span></p>
                     <p>Origin : <span><?=$car["Origin"]?></span></p>
+                </div>
+                <div class="learn-more-container">
                     <a class="learn-more" href='car/<?=$car['id']?>'>
                         <span class="circle" aria-hidden="true">
-                        <span class="icon arrow"></span>
+                            <span class="icon arrow"></span>
                         </span>
                         <span class="learn-more-text">Book now!</span>
                     </a>
