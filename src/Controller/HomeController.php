@@ -1,12 +1,15 @@
 <?php
 
 namespace App\Controller;
+require '../config/parameters.php';
+
+use App\Database\Database;
 class HomeController
 {
    
 
     public function index(){
-
+        $cars = Database::connect()->query("SELECT * FROM cars")->fetchAll();
         include "meep.php";
     }
 

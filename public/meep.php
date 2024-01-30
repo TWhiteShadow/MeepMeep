@@ -16,10 +16,9 @@ $projectName = "🚗 MeepMeep 🚗"
     
     <div class="cars-container">
         <?php
-        $array = json_decode(file_get_contents("../cars.json"), true);
-        shuffle($array);
-        $array = array_slice($array, 0, $numberOfCards);
-        foreach ($array as $car) { ?>
+        shuffle($cars);
+        $cars = array_slice($cars, 0, $numberOfCards);
+        foreach ($cars as $car) { ?>
             <div class="car">
                 <div class="car-header">
                     <div class="car-image">
