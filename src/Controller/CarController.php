@@ -68,8 +68,7 @@ class CarController
             }
         }
         if ($carExist === true) {
-            var_dump($carExist);
-            file_put_contents("../cars.json", json_encode($array));
+            file_put_contents("../../cars.json", json_encode($array, JSON_PRETTY_PRINT));
             // Rediriger ou afficher la page mise à jour
             Router::redirect(Router::use('show_car', $id), 3);
         } else {
