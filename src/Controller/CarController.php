@@ -50,27 +50,27 @@ class CarController
         //var_dump($_POST);
         $carExist = false;
         $array = json_decode(file_get_contents("../cars.json"), true);
-        foreach ($array as $key => $value) {
-            if ($value["id"] == $id) {
+        foreach ($array as &$car) {
+            if ($car["id"] == $id) {
                 $carExist = true;
-                $value["Name"] = $_POST['Name'];
-                $value["Miles_per_Gallon"] = $_POST['Miles_per_Gallon'];
-                $value["Cylinders"] = $_POST['Cylinders'];
-                $value["Displacement"] = $_POST['Displacement'];
-                $value["Horsepower"] = $_POST['Horsepower'];
-                $value["Weight_in_lbs"] = $_POST['Weight_in_lbs'];
-                $value["Acceleration"] = $_POST['Acceleration'];
-                $value["Year"] = $_POST['Year'];
-                $value["Origin"] = $_POST['Origin'];
-                $value["photo"] = $_POST['photo'];
+                $car["Name"] = $_POST['Name'];
+                $car["Miles_per_Gallon"] = $_POST['Miles_per_Gallon'];
+                $car["Cylinders"] = $_POST['Cylinders'];
+                $car["Displacement"] = $_POST['Displacement'];
+                $car["Horsepower"] = $_POST['Horsepower'];
+                $car["Weight_in_lbs"] = $_POST['Weight_in_lbs'];
+                $car["Acceleration"] = $_POST['Acceleration'];
+                $car["Year"] = $_POST['Year'];
+                $car["Origin"] = $_POST['Origin'];
+                $car["photo"] = $_POST['photo'];
 
                 break;
             }
         }
         if ($carExist === true) {
-            file_put_contents("../../cars.json", json_encode($array, JSON_PRETTY_PRINT));
+            // include "update.php";
+            // file_put_contents("../../cars.json", json_encode($array, JSON_PRETTY_PRINT));
             // Rediriger ou afficher la page mise à jour
-            Router::redirect(Router::use('show_car', $id), 3);
         } else {
             Router::redirect(Router::use('welcome'), 3);
         }
