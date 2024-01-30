@@ -25,52 +25,98 @@ $projectName = "🚗 MeepMeep 🚗";
     <div class="cars-container">
         <?php ?>
         <div class="car car-info">
-            <div class="car-header">
-                <div class="car-image">
-                    <img src="<?= $car['photo'] ?>" alt="<?= ucwords($car["Name"]) ?> image">
-                </div>
-                <h2><?= ucwords($car["Name"]) ?></h2>
-            </div>
-            <div class="car-content car-content-info">
-                <div>
-                    <p>Horsepower (@rpm) : <span><?= $car["Horsepower"] ?></span></p>
-                    <p>Miles per gallon : <span><?= $car["Miles_per_Gallon"] ?></span></p>
-                </div>
-                <div>
-
-                    <p>Cylinders : <span><?= $car["Cylinders"] ?></span></p>
-                    <p>Displacement : <span><?= $car["Displacement"] ?></span></p>
-                </div>
-                <div>
-                    <p>Weight (in lb) : <span><?= $car["Weight_in_lbs"] ?></span></p>
-                    <p>Acceleration (0 - 60 mph) : <span><?= $car["Acceleration"] ?></span></p>
-                </div>
-                <div>
-                    <p>Origin : <span><?= $car["Origin"] ?></span></p>
-                    <p>Year : <span><?= $car["Year"] ?></span></p>
-                </div>
-
-            </div>
             <form action="/<?= Router::use("update_car", $car['id']) ?>" method="post">
-                <label for="model">Car Model:</label>
-                <input type="text" id="model" name="model" required>
+                <div class="car-header">
+                    <div class="car-image">
+                        <img id="previewPicture" src="<?= $car['photo'] ?>" alt="<?= ucwords($car["Name"]) ?> image">
+                    </div>
+                    <div class="input-group">
+                    <div>
+                        <input onchange="updatePreviewPicture()" id="inputPicture" required="" type="text" name="photo" autocomplete="off" class="input" value="<?= !empty($car["photo"]) ? $car["photo"] : "" ?>">
+                        <label class="user-label">Picture :</label>
+                    </div>
+                        </div>
 
-                <label for="year">Year:</label>
-                <input type="number" id="year" name="year" required>
+                        <div class="input-group">
+                        <div>
+                            <input required="" type="text" name="Name" autocomplete="off" class="input" value="<?= !empty($car["Name"]) ? $car["Name"] : "" ?>">
+                            <label class="user-label">Name :</label>
+                        </div>
+                        </div>
+                </div>
+                <div class="car-content car-content-info">
+                    <div>
+                        <div class="input-group">
+                        <div>
+                            <input required="" type="text" name="Horsepower" autocomplete="off" class="input" value="<?= !empty($car["Horsepower"]) ? $car["Horsepower"] : "" ?>">
+                            <label class="user-label">Horsepower (@rpm) :</label>
+                        </div>
+                        </div>
 
-                <!-- Add other fields as needed -->
+                        <div class="input-group">
+                        <div>
+                            <input required="" type="text" name="Miles_per_Gallon" autocomplete="off" class="input" value="<?= !empty($car["Miles_per_Gallon"]) ? $car["Miles_per_Gallon"] : "" ?>">
+                            <label class="user-label">Miles per gallon :</label>
+                        </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="input-group">
+                        <div>
+                            <input required="" type="text" name="Cylinders" autocomplete="off" class="input" value="<?= !empty($car["Cylinders"]) ? $car["Cylinders"] : "" ?>">
+                            <label class="user-label">Cylinders :</label>
+                        </div>
+                        </div>
+                        
+                        <div class="input-group">
+                        <div>
+                            <input required="" type="text" name="Displacement" autocomplete="off" class="input" value="<?= !empty($car["Displacement"]) ? $car["Displacement"] : "" ?>">
+                            <label class="user-label">Displacement :</label>
+                        </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="input-group">
+                        <div>
+                            <input required="" type="text" name="Weight_in_lbs" autocomplete="off" class="input" value="<?= !empty($car["Weight_in_lbs"]) ? $car["Weight_in_lbs"] : "" ?>">
+                            <label class="user-label">Weight (in lb) :</label>
+                        </div>
+                        </div>
+                        
+                        <div class="input-group">
+                        <div>
+                            <input required="" type="text" name="Acceleration" autocomplete="off" class="input" value="<?= !empty($car["Acceleration"]) ? $car["Acceleration"] : "" ?>">
+                            <label class="user-label">Acceleration (0 - 60 mph) :</label>
+                        </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="input-group">
+                        <div>
+                            <input required="" type="text" name="Origin" autocomplete="off" class="input" value="<?= !empty($car["Origin"]) ? $car["Origin"] : "" ?>">
+                            <label class="user-label">Origin :</label>
+                        </div>
+                        </div>
 
-                <button type="submit">Update Car</button>
+                        <div class="input-group">
+                        <div>
+                            <input required="" type="text" name="Year" autocomplete="off" class="input" value="<?= !empty($car["Year"]) ? $car["Year"] : "" ?>">
+                            <label class="user-label">Year :</label>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="submit-button-container">
+                    <button class="submit-button" type="submit">Validate Changes</button>
+                </div>
             </form>
-            <div class="learn-more-container">
-                <a class="learn-more" href='/<?= Router::use("update_car", $car['id']) ?>'>
-                    <span class="circle" aria-hidden="true">
-                        <span class="icon arrow"></span>
-                    </span>
-                    <span class="learn-more-text">Book now!</span>
-                </a>
-            </div>
         </div>
+        <script type="text/javascript">
+            function updatePreviewPicture(){
+                console.log(document.getElementById('inputPicture').value);
+                document.getElementById('previewPicture').src = document.getElementById('inputPicture').value;
+            };
+        </script>
 </body>
 
 </html>

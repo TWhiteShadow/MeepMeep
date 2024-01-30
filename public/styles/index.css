@@ -36,10 +36,11 @@ body {
     border-radius: 20px;
     font-family: 'Mulish', sans-serif;
     z-index: 2;
-    
+    position: relative;
+
 }
 
-.car h2{
+.car h2 {
     color: #4D2D18;
 }
 
@@ -211,4 +212,180 @@ body {
     justify-content: space-evenly;
     width: 100%;
     text-align: start;
+    margin: 10px 5px;
 }
+
+
+/* EDIT BUTTON */
+
+.editBtn {
+    width: 55px;
+    height: 55px;
+    border-radius: 20px;
+    border: none;
+    background-color: #8A6240;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.123);
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    overflow: hidden;
+    transition: all 0.3s;
+}
+
+.editBtn::before {
+    content: "";
+    width: 200%;
+    height: 200%;
+    background-color: #ffffff26;
+    position: absolute;
+    z-index: 1;
+    transform: scale(0);
+    transition: all 0.3s;
+    border-radius: 50%;
+    filter: blur(10px);
+}
+
+.editBtn:hover::before {
+    transform: scale(1);
+}
+
+.editBtn:hover {
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.336);
+}
+
+.editBtn svg {
+    height: 17px;
+    fill: white;
+    z-index: 3;
+    transition: all 0.2s;
+    transform-origin: bottom;
+}
+
+.editBtn:hover svg {
+    transform: rotate(-15deg) translateX(5px);
+}
+
+.editBtn::after {
+    content: "";
+    width: 25px;
+    height: 1.5px;
+    position: absolute;
+    bottom: 19px;
+    left: -5px;
+    background-color: white;
+    border-radius: 2px;
+    z-index: 2;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s ease-out;
+}
+
+.editBtn:hover::after {
+    transform: scaleX(1);
+    left: 0px;
+    transform-origin: right;
+}
+
+
+
+/* INPUT BUTTONS */
+
+.input-group {
+    position: relative;
+}
+
+.input-group div{
+    position: relative;
+    width: auto !important;
+}
+
+.input {
+    border: solid 1.5px #4D2D18;
+    border-radius: 1rem;
+    background: none;
+    padding: 1rem;
+    font-size: 1rem;
+    color: black;
+    transition: border 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    background-color: #ececea;
+}
+
+.user-label {
+    position: absolute;
+    left: 15px;
+    color: #4D2D18;
+    pointer-events: none;
+    transform: translateY(1rem);
+    transition: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.input:focus,
+input:valid {
+    outline: none;
+    border: 1.5px solid #8A6240;
+}
+
+.input:focus~label,
+input:valid~label {
+    transform: translateY(-50%) scale(0.8);
+    background-color: #ececea;
+    padding: 0 .2em;
+    color: #8A6240;
+    box-shadow: 0px 0px 3px 3px #ececea;
+}
+
+
+/* validate .submit-button */
+
+.submit-button-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.submit-button {
+    padding: 15px 25px;
+    border: unset;
+    border-radius: 15px;
+    color: #212121;
+    z-index: 1;
+    background: #e8e8e8;
+    position: relative;
+    font-weight: 1000;
+    font-size: 17px;
+    -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+    box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+    -webkit-transition: all 250ms;
+    transition: all 250ms;
+    overflow: hidden;
+    cursor: pointer;
+   }
+   
+   .submit-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    border-radius: 15px;
+    background-color: #467935;
+    z-index: -1;
+    -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+    box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+    -webkit-transition: all 250ms;
+    transition: all 250ms
+   }
+   
+   .submit-button:hover {
+    color: #e8e8e8;
+   }
+   
+   .submit-button:hover::before {
+    width: 100%;
+   }
