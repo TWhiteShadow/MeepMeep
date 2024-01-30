@@ -13,6 +13,7 @@ $projectName = "🚗 MeepMeep 🚗"
 </head>
 <body>
     <a href="/"><h1><?=$projectName?></h1></a>
+    
     <div class="cars-container">
         <?php
         $array = json_decode(file_get_contents("../cars.json"), true);
