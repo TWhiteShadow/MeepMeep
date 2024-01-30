@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Router\Router;
 class CarController
 {
     private string $path = "../src/Template/car/";
@@ -46,19 +47,33 @@ class CarController
 
     public function update($id)
     {
-        var_dump($_POST);
-        
+        //var_dump($_POST);
+        $carExist = false;
         $array = json_decode(file_get_contents("../cars.json"), true);
         foreach ($array as $key => $value) {
             if ($value["id"] == $id) {
-                $car = $value;
+                $carExist = true;
+                $value["Name"] = $_POST['Name'];
+                $value["Miles_per_Gallon"] = $_POST['Miles_per_Gallon'];
+                $value["Cylinders"] = $_POST['Cylinders'];
+                $value["Displacement"] = $_POST['Displacement'];
+                $value["Horsepower"] = $_POST['Horsepower'];
+                $value["Weight_in_lbs"] = $_POST['Weight_in_lbs'];
+                $value["Acceleration"] = $_POST['Acceleration'];
+                $value["Year"] = $_POST['Year'];
+                $value["Origin"] = $_POST['Origin'];
+                $value["photo"] = $_POST['photo'];
+
                 break;
             }
         }
-        if (isset($car)) {
-            include "show.php";
+        if ($carExist === true) {
+            var_dump($carExist);
+            file_put_contents("../cars.json", json_encode($array));
+            // Rediriger ou afficher la page mise à jour
+            Router::redirect(Router::use('show_car', $id), 3);
         } else {
-            header("Location: /404");
+            Router::redirect(Router::use('welcome'), 3);
         }
     }
 }

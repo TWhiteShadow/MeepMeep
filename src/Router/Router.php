@@ -44,12 +44,15 @@ class Router
         foreach (self::$routes as $methodRoutes) {
             foreach ($methodRoutes as $route) {
                 if ($route->getName() === $routeName) {
+                    // print_r($route);
                     if($route->getPath() === ""){
                         // Si c'est la route par défault ( "/" ) et qu'on est en localhost
                         $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-                        $path = explode("/", $url);
-                        array_pop($path);
-                        $newurl = implode("/",$path);
+                        $path = explode("/", $url); 
+                        // var_dump($path, "<br>");
+                        $path = "/";
+                        $newurl = $path;
+                        // var_dump($newurl, "<br>");
                         return $newurl;
                     }
                     $url =  $route->getPath();
@@ -79,8 +82,8 @@ class Router
         $domain = 'http://' . $_SERVER['HTTP_HOST'];
 
         // Construisez l'URL de redirection en utilisant les fonctions de routage
-        $url = $domain . implode('/', array_slice(explode('/', $_SERVER['REQUEST_URI']), 0, -$nbPathToDelete)) . '/' . $route;
-
+        $path = implode('/', array_slice(explode('/', $_SERVER['REQUEST_URI']), 0, -$nbPathToDelete)) . '/' . $route;
+        $url = $domain . str_replace("//","/", $path);
         // Effectuez la redirection
         header('Location: ' . $url);
         exit;
