@@ -34,16 +34,18 @@ class Route{
 		return $this;
     }
 
-    public function matches(string $url) : bool
-    {   
-        $path = preg_replace('#\{(\w+)\}#', '([^/]+)', $this->path);
-        $pathToMatch = "#^$path$#";
-        
-        if (preg_match($pathToMatch, $url, $matches)) {
-            $this->matches = $matches; // Assign $matches to $this->matches
-            return true;
-        }
-        return false;
+    public function matches(string $url): bool
+    {
+      $path = preg_replace('#\{(\w+)\}#', '([^/]+)', $this->path);
+      $pathToMatch = "#^$path$#";
+      $urlWithoutQuery = strtok($url, '?');
+
+      if (preg_match($pathToMatch, $urlWithoutQuery, $matches)) {
+        $this->matches = $matches;
+        return true;
+      }
+
+      return false;
     }
 
     public function execute(Container $container): void

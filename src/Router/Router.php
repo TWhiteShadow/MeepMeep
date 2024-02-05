@@ -21,9 +21,24 @@ class Router
         self::$routes['POST'][] = new Route($path, $action, $name); 
     }
 
+    public function put(string $path, string $action, string $name): void
+    {
+        self::$routes['PUT'][] = new Route($path, $action, $name);
+    }
+
     public function get(string $path, string $action, string $name) : void
     {
+        $path = $this->processPathWithParams($path);
         self::$routes['GET'][] = new Route($path, $action, $name); 
+    }
+
+    private function processPathWithParams(string $path): string
+    {
+        $pathParts = explode('?', $path);
+        $basePath = trim($pathParts[0], '/');
+        $queryParams = isset($pathParts[1]) ? '?' . $pathParts[1] : '';
+
+        return $basePath . $queryParams;
     }
 
     public function run()

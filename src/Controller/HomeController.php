@@ -59,4 +59,5 @@ class HomeController
         curl_close($ch);
         return $response;
     }
+
 }
