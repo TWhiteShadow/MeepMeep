@@ -9,6 +9,7 @@ use PDO;
 
 class CarController
 {
+    public function __construct(private Database $db){}
     private string $path = "../src/Template/car/";
     public function index()
     {
@@ -17,9 +18,7 @@ class CarController
 
     public function show($id)
     {
-
-        $db = Database::connect();
-        $car = $db->prepare("SELECT * FROM cars WHERE id = :id");
+        $car = $this->db->prepare("SELECT * FROM cars WHERE id = :id");
         $car->bindParam(":id", $id);
         $car->execute();
         $car = $car->fetch();
@@ -34,8 +33,7 @@ class CarController
     public function edit($id)
     {
 
-        $db = Database::connect();
-        $car = $db->prepare("SELECT * FROM cars WHERE id = :id");
+        $car = $this->db->prepare("SELECT * FROM cars WHERE id = :id");
         $car->bindParam(":id", $id);
         $car->execute();
         $car = $car->fetch();
@@ -50,8 +48,7 @@ class CarController
     public function update($id)
     {
 
-        $db = Database::connect();
-        $car = $db->prepare("SELECT * FROM cars WHERE id = :id");
+        $car = $this->db->prepare("SELECT * FROM cars WHERE id = :id");
         $car->bindParam(":id", $id);
         $car->execute();
         $car = $car->fetch();
@@ -68,7 +65,7 @@ class CarController
             $Origin = $_POST['Origin'];
             $photo = $_POST['photo'];
             
-            $update = $db->prepare("UPDATE cars SET Name = :name, Miles_per_Gallon = :mpg, Cylinders = :cylinders, Displacement = :displacement,
+            $update = $this->db->prepare("UPDATE cars SET Name = :name, Miles_per_Gallon = :mpg, Cylinders = :cylinders, Displacement = :displacement,
             Horsepower = :hp, Weight_in_lbs = :weight, Acceleration = :accel, Year = :year, Origin = :origin, photo = :photo WHERE id = :id");
             $update->bindParam(":name", $name, PDO::PARAM_STR);
             $update->bindParam(":mpg", $Miles_per_Gallon);

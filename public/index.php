@@ -3,11 +3,16 @@
 require "../autoloader.php";
 
 
+use App\Database\Database;
+use App\DependencyInjection\Container;
 use App\Router\Router;
 
-$url = $_SERVER["REQUEST_URI"];
-// Instantiate the Router
-$router = new Router($url);
+$container = new Container();
+
+$container->addService('App\Controller\HomeController', new App\Controller\HomeController());
+$container->addService('App\Controller\CarController', new App\Controller\CarController(new Database()));
+
+$router = new Router($_SERVER["REQUEST_URI"], $container);
 
 $router->get("/", "App\Controller\HomeController@index", "welcome");
 $router->get("/meepmeep", "App\Controller\HomeController@index", "meepmeep");
