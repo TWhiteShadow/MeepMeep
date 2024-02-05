@@ -6,10 +6,14 @@ require '../config/parameters.php';
 use App\Database\Database;
 class HomeController
 {
-   
+    public function __construct(private Database $db)
+    {
+    }
 
     public function index(){
-        $cars = Database::connect()->query("SELECT * FROM cars")->fetchAll();
+        $car = $this->db->prepare("SELECT * FROM cars");
+        $car->execute();
+        $cars = $car->fetchAll();
         include "meep.php";
     }
 

@@ -9,7 +9,7 @@ use App\Router\Router;
 
 $container = new Container();
 
-$container->addService('App\Controller\HomeController', new App\Controller\HomeController());
+$container->addService('App\Controller\HomeController', new App\Controller\HomeController(new Database()));
 $container->addService('App\Controller\CarController', new App\Controller\CarController(new Database()));
 
 $router = new Router($_SERVER["REQUEST_URI"], $container);
