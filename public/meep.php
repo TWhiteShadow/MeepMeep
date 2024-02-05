@@ -1,4 +1,5 @@
 <?php
+use App\Router\Router;
 $numberOfCards = 27;
 $pageName = 'Browse';
 $projectName = "🚗 MeepMeep 🚗"
@@ -37,7 +38,7 @@ $projectName = "🚗 MeepMeep 🚗"
                     <p>Origin : <span><?=$car["Origin"]?></span></p>
                 </div>
                 <div class="learn-more-container">
-                    <a class="learn-more" href='car/<?=$car['id']?>'>
+                    <a class="learn-more" href='<?= Router::use("show_car", $car['id']) ?>'>
                         <span class="circle" aria-hidden="true">
                             <span class="icon arrow"></span>
                         </span>

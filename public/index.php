@@ -2,15 +2,15 @@
 
 require "../autoloader.php";
 
-
 use App\Database\Database;
 use App\DependencyInjection\Container;
 use App\Router\Router;  
+use App\Event\Mail;
 
 $container = new Container();
 
 $container->addService('App\Controller\HomeController', new App\Controller\HomeController(new Database()));
-$container->addService('App\Controller\CarController', new App\Controller\CarController(new Database()));
+$container->addService('App\Controller\CarController', new App\Controller\CarController(new Database(), new Mail()));
 
 $router = new Router($_SERVER["REQUEST_URI"], $container);
 

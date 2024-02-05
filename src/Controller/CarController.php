@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+
 require '../config/parameters.php';
 
 use App\Router\Router;
@@ -8,10 +9,11 @@ use App\Database\Database;
 use App\Entity\Car;
 use DateTime;
 use PDO;
+use App\Event\Mail;
 
 class CarController
 {
-    public function __construct(private Database $db){}
+    public function __construct(private Database $db, private Mail $email){}
     private string $path = "../src/Template/car/";
     public function index()
     {
@@ -189,6 +191,10 @@ class CarController
             $update->bindParam(":id", $id);
 
             $update->execute();
+
+
+
+                $this->email->sendUpdateEmail("sarkozy@gmail.com", $car );
 
             Router::redirect(Router::use('show_car', $id), 3);
         } else {
