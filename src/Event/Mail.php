@@ -6,6 +6,7 @@ require '../vendor/autoload.php';
 
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\PHPMailer;
+use Exception;
 
 class Mail
 {
@@ -28,9 +29,8 @@ class Mail
         $this->mailer->addAddress($recipient);
 
         $subject = 'New Record Created';
-        $body = "<h1>New Record Created</h1>
-            <p>Data: " . json_encode($data) . "</p>";
-
+        $title = "<h1>Record Created</h1>";
+        $body = $this->formatEmail($title, $data);
         $this->sendEmail($subject, $body);
     }
 
@@ -55,11 +55,12 @@ class Mail
         $this->sendEmail($subject, $body);
     }
 
-    private function sendEmail($subject, $body)
+    public function sendEmail($subject, $body)
     {
         $this->mailer->Subject = $subject;
         $this->mailer->isHTML(true);
         $this->mailer->Body = $body;
+        $this->mailer->addAddress("sender@meepmeep.com");
 
         if ($this->mailer->send()) {
         } else {
@@ -71,10 +72,11 @@ class Mail
         $this->mailer->clearAddresses();
     }
 
-    private function formatEmail($title, $data) {
-        // Decode the JSON data
-        $data = json_decode($data, true);
-    
+    public function formatEmail($title, $data) {
+        if (is_string($data)){
+            $data = json_decode($data, true);
+        }
+
         // Start building the HTML body
         $body = '<html lang="en">
             <head>

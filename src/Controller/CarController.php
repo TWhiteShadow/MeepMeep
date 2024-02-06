@@ -4,16 +4,16 @@ namespace App\Controller;
 
 require '../config/parameters.php';
 
+use App\Event\EventDispatcher;
 use App\Router\Router;
 use App\Database\Database;
 use App\Entity\Car;
 use DateTime;
 use PDO;
-use App\Event\Mail;
 
 class CarController
 {
-    public function __construct(private Database $db, private Mail $email){}
+    public function __construct(private Database $db, private EventDispatcher $eventDispatcher){}
     private string $path = "../src/Template/car/";
     public function index()
     {
@@ -80,6 +80,7 @@ class CarController
     public function api_store(){
         if ($_REQUEST['type'] == "json") {
             $car = file_get_contents("php://input");
+            // var_dump($car);die;
             $car = json_decode($car);
             if (isset($car)) {
                 $name = $car->Name;
@@ -106,11 +107,10 @@ class CarController
                 $store->bindParam(":origin", $Origin);
                 $store->bindParam(":photo", $photo);
 
-                $store->execute();
-
-                $this->email->sendCreateEmail("receiver@meepmeep.com", $car );
-
-                echo "Voiture ajoutée";
+                if($store->execute()){
+                    $this->eventDispatcher->dispatch('car.created', $car);
+                    echo "Voiture ajoutée";
+                }
 
             }else{
                 echo "Aucune voiture ajoutée";
@@ -138,11 +138,11 @@ class CarController
                 }
                 $update->bindParam(":id", $id);
     
-                $update->execute();
-    
-                echo "Voiture mise à jour";
-    
-                $this->email->sendUpdateEmail("receiver@meepmeep.com", json_encode($car));
+                
+                if($update->execute()){
+                    $this->eventDispatcher->dispatch('car.updated', $car);
+                    echo "Voiture mise à jour";
+                }
     
             } else {
                 echo "Aucune voiture mise à jour";
@@ -185,9 +185,9 @@ class CarController
             $update->bindParam(":photo", $photo);
             $update->bindParam(":id", $id);
 
-            $update->execute();
-
-            $this->email->sendUpdateEmail("receiver@meepmeep.com", $car );
+            if($update->execute()){
+                $this->eventDispatcher->dispatch('car.updated', $car);
+            }
 
             Router::redirect(Router::use('show_car', $id), 3);
         } else {
