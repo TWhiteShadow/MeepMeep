@@ -20,7 +20,7 @@ class Mail
         $this->mailer->Host = 'mailcatcher';
         $this->mailer->Port = 1025;
 
-        $this->mailer->setFrom('ououibaguette@gmail.com', 'Mailtrap');
+        $this->mailer->setFrom('sender@meepmeep.com', 'Sender');
     }
 
     public function sendCreateEmail($recipient, $data)
@@ -39,9 +39,8 @@ class Mail
         $this->mailer->addAddress($recipient);
 
         $subject = 'Record Updated';
-        $body = "<h1>Record Updated</h1>
-            <p>Data: " . json_encode($data) . "</p>";
-
+        $title = "<h1>Record Updated</h1>";
+        $body = $this->formatEmail($title, $data);
         $this->sendEmail($subject, $body);
     }
 
@@ -70,5 +69,51 @@ class Mail
 
         // Réinitialiser les destinataires pour les prochains envois
         $this->mailer->clearAddresses();
+    }
+
+    private function formatEmail($title, $data) {
+        // Decode the JSON data
+        $data = json_decode($data, true);
+    
+        // Start building the HTML body
+        $body = '<html lang="en">
+            <head>
+              <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+              <meta name="viewport" content="width=device-width">
+              <title>' . $title . '</title>
+              <style></style>
+            </head>
+            <body>
+               <div id="email" style="width:600px;">
+            
+                <table role="presentation" border="0" cellspacing="0" width="100%">
+                  <tr>
+                    <td>' . $title . '</td>
+                  </tr>
+                </table>';
+    
+        // Loop through the data to create rows in the table
+        foreach ($data as $key => $value) {
+            if ($key == "photo"){
+                $body.= '<table role="presentation" border="0" cellspacing="0" width="100%">
+                  <tr>
+                    <td><strong>Photo&nbsp;:</strong></td>
+                    <td><img src="'. $value. '" height="300px"></td>
+                  </tr>
+                </table>';
+            }else{
+                $body .= '<table role="presentation" border="0" cellspacing="0" width="100%">
+                <tr>
+                <td><strong>' . htmlspecialchars($key) . ':</strong> ' . htmlspecialchars($value) . '</td>
+                </tr>
+                </table>';
+            }
+        }
+    
+        // Close the HTML body
+        $body .= '</div></body></html>';
+    
+        // Return the formatted email body
+        return $body;
     }
 }

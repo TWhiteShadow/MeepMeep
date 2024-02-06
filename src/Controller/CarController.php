@@ -50,7 +50,7 @@ class CarController
         $car = $this->db->prepare("SELECT * FROM cars WHERE id = :id");
         $car->bindParam(":id", $id);
         $car->execute();
-        $car = $car->fetch();
+        $car = $car->fetch(PDO::FETCH_ASSOC);
 
         if (isset($car)) {
             if (isset($_GET['type']) && $_GET['type'] == "json") {
@@ -65,7 +65,6 @@ class CarController
 
     public function edit($id)
     {
-    
         $car = $this->db->prepare("SELECT * FROM cars WHERE id = :id");
         $car->bindParam(":id", $id);
         $car->execute();
@@ -78,10 +77,10 @@ class CarController
         }
     }
 
-    public function api_store($id){
+    public function api_store(){
         if ($_REQUEST['type'] == "json") {
-            $car = json_decode($_REQUEST['content']);
-            // var_dump($car);
+            $car = file_get_contents("php://input");
+            $car = json_decode($car);
             if (isset($car)) {
                 $name = $car->Name;
                 $Miles_per_Gallon = $car->Miles_per_Gallon;
@@ -109,52 +108,48 @@ class CarController
 
                 $store->execute();
 
+                $this->email->sendCreateEmail("receiver@meepmeep.com", $car );
+
                 echo "Voiture ajoutée";
+
             }else{
                 echo "Aucune voiture ajoutée";
             }
         }
     }
 
-    public function api_update($id)
-    {
+    public function api_update($id) {
         if ($_REQUEST['type'] == "json") {
-            $car = json_decode($_REQUEST['content']);
-            // var_dump($car);
+            $car = file_get_contents("php://input");
+            $car = json_decode($car, true); // Decode JSON as associative array
             if (isset($car)) {
-                $name = $car->Name;
-                $Miles_per_Gallon = $car->Miles_per_Gallon;
-                $Cylinders = $car->Cylinders;
-                $Displacement = $car->Displacement;
-                $Horsepower = $car->Horsepower;
-                $Weight_in_lbs = $car->Weight_in_lbs;
-                $Acceleration = $car->Acceleration;
-                $Year = $car->Year;
-                $Origin = $car->Origin;
-                $photo = $car->photo;
-
-                $update = $this->db->prepare("UPDATE cars SET Name = :name, Miles_per_Gallon = :mpg, Cylinders = :cylinders, Displacement = :displacement,
-            Horsepower = :hp, Weight_in_lbs = :weight, Acceleration = :accel, Year = :year, Origin = :origin, photo = :photo WHERE id = :id");
-                $update->bindParam(":name", $name, PDO::PARAM_STR);
-                $update->bindParam(":mpg", $Miles_per_Gallon);
-                $update->bindParam(":cylinders", $Cylinders);
-                $update->bindParam(":displacement", $Displacement);
-                $update->bindParam(":hp", $Horsepower);
-                $update->bindParam(":weight", $Weight_in_lbs);
-                $update->bindParam(":accel", $Acceleration);
-                $update->bindParam(":year", $Year);
-                $update->bindParam(":origin", $Origin);
-                $update->bindParam(":photo", $photo);
+                $update_fields = '';
+                foreach ($car as $key => $value) {
+                    $update_fields .= "$key = :$key, ";
+                }
+                // Remove trailing comma and space
+                $update_fields = rtrim($update_fields, ', ');
+    
+                $update = $this->db->prepare("UPDATE cars SET $update_fields WHERE id = :id");
+                
+                // Bind parameters dynamically
+                foreach ($car as $key => &$value) {
+                    $update->bindParam(":$key", $value);
+                }
                 $update->bindParam(":id", $id);
-
+    
                 $update->execute();
-
-                echo "Voiture mise à jours";
+    
+                echo "Voiture mise à jour";
+    
+                $this->email->sendUpdateEmail("receiver@meepmeep.com", json_encode($car));
+    
             } else {
-                echo "Aucune voiture mise à jours";
+                echo "Aucune voiture mise à jour";
             }
         }
     }
+    
 
     public function update($id)
     {
@@ -192,9 +187,7 @@ class CarController
 
             $update->execute();
 
-
-
-                $this->email->sendUpdateEmail("sarkozy@gmail.com", $car );
+            $this->email->sendUpdateEmail("receiver@meepmeep.com", $car );
 
             Router::redirect(Router::use('show_car', $id), 3);
         } else {

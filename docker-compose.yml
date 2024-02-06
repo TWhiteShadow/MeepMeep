@@ -24,11 +24,10 @@ services:
 
     depends_on:
       - mariadb
-      - ruby
 
-  ruby:
-    build:
-      dockerfile: Docker/ruby/Dockerfile
+  # ruby:
+  #   build:
+  #     dockerfile: Docker/ruby/Dockerfile
 
   mailcatcher:
     restart: on-failure
