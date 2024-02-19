@@ -18,31 +18,21 @@ class CarController
     public function index()
     {
         if ($_GET['type'] == "json") {
+            // Autoriser les requêtes depuis n'importe quelle origine
+            header("Access-Control-Allow-Origin: *");
+            // Si nécessaire, autoriser les méthodes spécifiées
+            // header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OP>
+
             $carStatement = $this->db->prepare("SELECT * FROM cars");
             $carStatement->execute();
             $carsData = $carStatement->fetchAll(PDO::FETCH_ASSOC);
+
+            // Envoyer la réponse JSON avec les en-têtes CORS appropriés
+            header("Content-Type: application/json");
             echo json_encode($carsData);
-
-            // $cars = [];
-            // foreach ($carsData as $carData) {
-            //     $car = new Car();
-            //     $car->setId($carData['id'])
-            //     ->setName($carData['Name'])
-            //     ->setMilesPerGallon($carData['Miles_per_Gallon'])
-            //     ->setCylinders($carData['Cylinders'])
-            //     ->setDisplacement($carData['Displacement'])
-            //     ->setHorsepower($carData['Horsepower'])
-            //     ->setWeightInLbs($carData['Weight_in_lbs'])
-            //     ->setAcceleration($carData['Acceleration'])
-            //     ->setYear($carData['Year'] ? new DateTime($carData['Year']) : null)
-            //     ->setOrigin($carData['Origin'])
-            //     ->setPhoto($carData['photo']);
-
-            //     $cars[] = $car;
-            // }
-            // var_dump($cars);
         }
     }
+
 
 
     public function show($id)
