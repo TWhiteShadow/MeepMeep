@@ -2,6 +2,8 @@
 
 namespace App\Router;
 
+use App\DependencyInjection\Container;
+
 class Route{
     public string $path;
     public string $action;
@@ -32,30 +34,37 @@ class Route{
 		return $this;
     }
 
-    public function matches(string $url) : bool
-    {   
-        $path = preg_replace('#\{(\w+)\}#', '([^/]+)', $this->path);
-        $pathToMatch = "#^$path$#";
-        
-        if (preg_match($pathToMatch, $url, $matches)) {
-            $this->matches = $matches; // Assign $matches to $this->matches
-            return true;
-        }
-        return false;
-    }
-
-    public function execute() : null
+    public function matches(string $url): bool
     {
-        $params = explode("@", $this->action);
-        $controller = new $params[0]();
-        $method = $params[1];
-        return isset($this->matches[1]) ? $controller->$method($this->matches[1]) :  $controller->$method();
+      $path = preg_replace('#\{(\w+)\}#', '([^/]+)', $this->path);
+      $pathToMatch = "#^$path$#";
+      $urlWithoutQuery = strtok($url, '?');
+
+      if (preg_match($pathToMatch, $urlWithoutQuery, $matches)) {
+        $this->matches = $matches;
+        return true;
+      }
+
+      return false;
     }
 
+    public function execute(Container $container): void
+    {
+      $params = explode("@", $this->action);
+      $controllerId = $params[0];
 
-    
+      if ($container->hasService($controllerId)) {
+        $controller = $container->getService($controllerId);
+        $method = $params[1];
 
-	
-    
+        if (isset($this->matches[1])) {
+          $controller->$method($this->matches[1]);
+        } else {
+          $controller->$method();
+        }
+      } else {
+        throw new \InvalidArgumentException("Controller with ID '$controllerId' not found in the container.");
+      }
+    }
 
 }

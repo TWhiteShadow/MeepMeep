@@ -1,12 +1,19 @@
 <?php
 
 namespace App\Controller;
+require '../config/parameters.php';
+
+use App\Database\Database;
 class HomeController
 {
-   
+    public function __construct(private Database $db)
+    {
+    }
 
     public function index(){
-
+        $car = $this->db->prepare("SELECT * FROM cars");
+        $car->execute();
+        $cars = $car->fetchAll();
         include "meep.php";
     }
 
@@ -52,4 +59,5 @@ class HomeController
         curl_close($ch);
         return $response;
     }
+
 }

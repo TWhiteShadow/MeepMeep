@@ -33,7 +33,7 @@ USE MeepMeep;
 CREATE TABLE IF NOT EXISTS `cars` (
   `id` int(11) NOT NULL,
   `Name` varchar(512) DEFAULT NULL,
-  `photo` varchar(1024) DEFAULT NULL,
+  `photo` TEXT DEFAULT NULL,
   `Miles_per_Gallon` decimal(11,1) DEFAULT NULL,
   `Cylinders` int(11) DEFAULT NULL,
   `Displacement` decimal(11,1) DEFAULT NULL,

@@ -2,15 +2,18 @@
 
 namespace App\Router;
 
+use App\DependencyInjection\Container;
+
 class Router
 {
     public $url;
     static public $routes = [];
+    private $container;
 
-    public function __construct($url)
+    public function __construct($url, Container $container)
     {
-        $this->url = trim($url,'/');
-
+        $this->url = trim($url, '/');
+        $this->container = $container;
     }
 
     public function post(string $path, string $action, string $name) : void
@@ -18,17 +21,33 @@ class Router
         self::$routes['POST'][] = new Route($path, $action, $name); 
     }
 
+    public function put(string $path, string $action, string $name): void
+    {
+        self::$routes['PUT'][] = new Route($path, $action, $name);
+    }
+
     public function get(string $path, string $action, string $name) : void
     {
+        $path = $this->processPathWithParams($path);
         self::$routes['GET'][] = new Route($path, $action, $name); 
+    }
+
+    private function processPathWithParams(string $path): string
+    {
+        $pathParts = explode('?', $path);
+        $basePath = trim($pathParts[0], '/');
+        $queryParams = isset($pathParts[1]) ? '?' . $pathParts[1] : '';
+
+        return $basePath . $queryParams;
     }
 
     public function run()
     {
         $matched = false;
-        foreach(self::$routes[$_SERVER['REQUEST_METHOD']] as $route){
+        foreach (self::$routes[$_SERVER['REQUEST_METHOD']] as $route) {
             if ($route->matches($this->url)) {
-                $route->execute();
+                // Pass the container to the execute method
+                $route->execute($this->container);
                 $matched = true;
             }
         }

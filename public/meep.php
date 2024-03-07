@@ -1,4 +1,5 @@
 <?php
+use App\Router\Router;
 $numberOfCards = 27;
 $pageName = 'Browse';
 $projectName = "🚗 MeepMeep 🚗"
@@ -16,10 +17,9 @@ $projectName = "🚗 MeepMeep 🚗"
     
     <div class="cars-container">
         <?php
-        $array = json_decode(file_get_contents("../cars.json"), true);
-        shuffle($array);
-        $array = array_slice($array, 0, $numberOfCards);
-        foreach ($array as $car) { ?>
+        shuffle($cars);
+        $cars = array_slice($cars, 0, $numberOfCards);
+        foreach ($cars as $car) { ?>
             <div class="car">
                 <div class="car-header">
                     <div class="car-image">
@@ -38,7 +38,7 @@ $projectName = "🚗 MeepMeep 🚗"
                     <p>Origin : <span><?=$car["Origin"]?></span></p>
                 </div>
                 <div class="learn-more-container">
-                    <a class="learn-more" href='car/<?=$car['id']?>'>
+                    <a class="learn-more" href='<?= Router::use("show_car", $car['id']) ?>'>
                         <span class="circle" aria-hidden="true">
                             <span class="icon arrow"></span>
                         </span>
