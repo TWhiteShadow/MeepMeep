@@ -10,7 +10,7 @@ Pour commencer, vos contenus seront stockés dans des fichiers.
 ## Installation
 
 ```bash
-git clone https://github.com/TWhiteShadow/MeepMeep/
+git clone [https://github.com/TWhiteShadow/MeepMeep/](https://github.com/TWhiteShadow/MeepMeep.git)
 ```
 puis lancement avec docker
 ```bash
